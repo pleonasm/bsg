@@ -1,0 +1,12 @@
+<?php require 'head.html'; ?>
+    <form action="/register" method="post">
+      <fieldset>
+        <legend>Register</legend>
+        <label for="dispname">Display Name</label> <input name="dispname" type="text">
+        <label for="username">Username</label> <input name="username" type="text">
+        <label for="password">Password</label> <input name="password" type="password">
+        <label for="phone">Phone</label> <input name="phone" type="tel">
+        <button type="submit">Register</button> <a href="/">Cancel</a>
+      </fieldset>
+    </form>
+<?php require 'foot.html'; ?>

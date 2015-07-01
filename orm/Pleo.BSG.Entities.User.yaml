@@ -1,0 +1,21 @@
+Pleo\BSG\Entities\User:
+  type: entity
+  table: users
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: NONE
+  fields:
+    displayName:
+      type: string
+      length: 32
+    username:
+      type: string
+      length: 24
+    password:
+      type: string
+      length: 60
+    phone:
+      type: string
+      length: 10
