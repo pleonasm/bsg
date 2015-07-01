@@ -1,4 +1,4 @@
-= Go =
+# Go
 
 Have composer around.
 
