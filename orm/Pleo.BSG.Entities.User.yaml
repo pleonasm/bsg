@@ -1,6 +1,7 @@
 Pleo\BSG\Entities\User:
   type: entity
   table: users
+  repositoryClass: Pleo\BSG\Entities\UserRepository
   id:
     id:
       type: integer
@@ -13,6 +14,7 @@ Pleo\BSG\Entities\User:
     username:
       type: string
       length: 24
+      unique: true
     password:
       type: string
       length: 60
