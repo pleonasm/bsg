@@ -41,6 +41,9 @@ $slim->container->set('redirector', function () use ($slim) {
         $response->header('Location', $baseUrl);
     };
 });
+$slim->container->set('session', function () use ($slim) {
+    return new Session;
+});
 
 $slim->get('/', function () use ($slim) {
     $slim->render('home.html');
@@ -55,9 +58,12 @@ $slim->post('/', function () use ($slim) {
     $repo = $em->getRepository('Pleo\\BSG\\Entities\\User');
     /** @var callable $redir */
     $redir = $slim->container->get('redirector');
+    /** @var Session $session */
+    $session = $slim->container->get('session');
 
     $user = $repo->authenticate($u, $p);
     if (false !== $user) {
+        $session->set('login', $user->id());
         $redir(303, '/dashboard');
         return;
     }
@@ -87,6 +93,15 @@ $slim->post('/register', function () use ($slim) {
 });
 
 $slim->get('/dashboard', function () use ($slim) {
+    /** @var Session $session */
+    $session = $slim->container->get('session');
+    /** @var callable $redir */
+    $redir = $slim->container->get('redirector');
+
+    if (!$session->get('login')) {
+        $redir(303, '/');
+        return;
+    }
     $slim->render('dashboard.html');
 });
 
