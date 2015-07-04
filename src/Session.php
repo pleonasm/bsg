@@ -40,4 +40,14 @@ class Session
 
         return $_SESSION[$key];
     }
+
+    public function destroy()
+    {
+        if (!$this->started) {
+            session_start();
+            $this->started = true;
+        }
+
+        session_destroy();
+    }
 }

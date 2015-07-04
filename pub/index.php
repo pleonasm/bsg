@@ -36,6 +36,16 @@ $slim->post('/', function () use ($slim) {
     $ctrl();
 });
 
+$slim->get('/logout', function () use ($slim) {
+    /** @var Redirector $redir */
+    $redir = $slim->container->get('redirector');
+    /** @var Session $session */
+    $session = $slim->container->get('session');
+
+    $session->destroy();
+    $redir(303, '/');
+});
+
 $slim->get('/register', function () use ($slim) {
     $slim->render('register.html');
 });

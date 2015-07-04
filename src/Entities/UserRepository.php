@@ -5,6 +5,16 @@ use Doctrine\ORM\EntityRepository;
 
 class UserRepository extends EntityRepository
 {
+    public function newUserUnsafe($displayName, $username, $password, $phone, $flush = true)
+    {
+        $id = mt_rand(1, mt_getrandmax());
+        $user = new User($id, $displayName, $username, $password, $phone);
+        $this->_em->persist($user);
+        if ($flush) {
+            $this->_em->flush();
+        }
+    }
+
     /**
      * @param $username
      * @param $password

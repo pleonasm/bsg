@@ -1,4 +1,4 @@
-Feature:
+Feature: Registration & Login
   In order to obtain a login
   As a new user
   I need to be able to enter registration information
