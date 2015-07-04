@@ -1,9 +1,8 @@
 <?php
 namespace Pleo\BSG;
 
-use Doctrine\ORM\EntityManagerInterface;
 use Pleo\BSG\Ctrl\HomePageSubmit;
-use Pleo\BSG\Entities\User;
+use Pleo\BSG\Ctrl\RegisterPageSubmit;
 use Slim\Log;
 use Slim\Slim;
 
@@ -20,10 +19,11 @@ $settings = [
 $slim = new Slim($settings);
 
 
-$slim->container->singleton('em', function () {                      return getEM();                    });
-$slim->container->singleton('redirector', function () use ($slim) {  return new Redirector($slim);      });
-$slim->container->singleton('session', function () {                 return new Session;                });
-$slim->container->singleton('page-home', function () use ($slim) {   return new HomePageSubmit($slim);  });
+$slim->container->singleton('em',            function () {             return getEM();                       });
+$slim->container->singleton('redirector',    function () use ($slim) { return new Redirector($slim);         });
+$slim->container->singleton('session',       function () {             return new Session;                   });
+$slim->container->singleton('page-home',     function () use ($slim) { return new HomePageSubmit($slim);     });
+$slim->container->singleton('page-register', function () use ($slim) { return new RegisterPageSubmit($slim); });
 
 
 $slim->get('/', function () use ($slim) {
@@ -41,20 +41,9 @@ $slim->get('/register', function () use ($slim) {
 });
 
 $slim->post('/register', function () use ($slim) {
-    $dispname = $slim->request()->post('dispname');
-    $username = $slim->request()->post('username');
-    $password = $slim->request()->post('password');
-    $phone = $slim->request()->post('phone');
-    /** @var EntityManagerInterface $em */
-    $em = $slim->container->get('em');
-    /** @var callable $redir */
-    $redir = $slim->container->get('redirector');
-
-    $id = mt_rand(0, mt_getrandmax());
-    $user = new User($id, $dispname, $username, $password, $phone);
-    $em->persist($user);
-    $em->flush();
-    $redir(303, '/');
+    /** @var RegisterPageSubmit $ctrl */
+    $ctrl = $slim->container->get('page-register');
+    $ctrl();
 });
 
 $slim->get('/dashboard', function () use ($slim) {
