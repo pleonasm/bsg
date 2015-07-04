@@ -1,0 +1,9 @@
+#!/bin/bash
+if [ -f dat/data.sqlite ]
+then
+  rm dat/data.sqlite
+fi
+vendor/bin/doctrine orm:schema-tool:create
+killall php
+php -S localhost:8888 -t pub pub/index.php &
+open http://localhost:8888/
