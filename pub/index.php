@@ -18,36 +18,22 @@ $settings = [
 ];
 
 $slim = new Slim($settings);
+
+
 $slim->container->singleton('em', function () {
     return getEM();
 });
-$slim->container->set('redirector', function () use ($slim) {
-    $scheme = $slim->request()->getScheme();
-    $host = $slim->request()->getHost();
-    $port = $slim->request()->getPort();
-    $response = $slim->response();
-
-    if ('http' === $scheme && 80 !== $port) {
-        $host .= ':' . $port;
-    }
-    if ('https' === $scheme && 443 !== $port) {
-        $host .= ':' . $port;
-    }
-
-    return function ($status, $urlPath) use ($scheme, $host, $response) {
-        $urlPath = ltrim($urlPath, '/');
-        $baseUrl = $scheme . '://' . $host . '/' . $urlPath;
-        $response->status($status);
-        $response->header('Location', $baseUrl);
-    };
+$slim->container->singleton('redirector', function () use ($slim) {
+    return new Redirector($slim);
 });
-$slim->container->set('session', function () use ($slim) {
+$slim->container->singleton('session', function () {
     return new Session;
 });
 
 $slim->get('/', function () use ($slim) {
     $slim->render('home.html');
 });
+
 
 $slim->post('/', function () use ($slim) {
     $u = $slim->request()->post('username');
