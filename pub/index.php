@@ -2,8 +2,8 @@
 namespace Pleo\BSG;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Pleo\BSG\Ctrl\HomePageSubmit;
 use Pleo\BSG\Entities\User;
-use Pleo\BSG\Entities\UserRepository;
 use Slim\Log;
 use Slim\Slim;
 
@@ -20,41 +20,20 @@ $settings = [
 $slim = new Slim($settings);
 
 
-$slim->container->singleton('em', function () {
-    return getEM();
-});
-$slim->container->singleton('redirector', function () use ($slim) {
-    return new Redirector($slim);
-});
-$slim->container->singleton('session', function () {
-    return new Session;
-});
+$slim->container->singleton('em', function () {                      return getEM();                    });
+$slim->container->singleton('redirector', function () use ($slim) {  return new Redirector($slim);      });
+$slim->container->singleton('session', function () {                 return new Session;                });
+$slim->container->singleton('page-home', function () use ($slim) {   return new HomePageSubmit($slim);  });
+
 
 $slim->get('/', function () use ($slim) {
     $slim->render('home.html');
 });
 
-
 $slim->post('/', function () use ($slim) {
-    $u = $slim->request()->post('username');
-    $p = $slim->request()->post('password');
-    /** @var EntityManagerInterface $em */
-    $em = $slim->container->get('em');
-    /** @var UserRepository $repo */
-    $repo = $em->getRepository('Pleo\\BSG\\Entities\\User');
-    /** @var callable $redir */
-    $redir = $slim->container->get('redirector');
-    /** @var Session $session */
-    $session = $slim->container->get('session');
-
-    $user = $repo->authenticate($u, $p);
-    if (false !== $user) {
-        $session->set('login', $user->id());
-        $redir(303, '/dashboard');
-        return;
-    }
-
-    $slim->render('home.html', ['msg' => 'Invalid login']);
+    /** @var HomePageSubmit $ctrl */
+    $ctrl = $slim->container->get('page-home');
+    $ctrl();
 });
 
 $slim->get('/register', function () use ($slim) {
