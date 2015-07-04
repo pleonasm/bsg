@@ -1,6 +1,9 @@
 <?php
 namespace Pleo\BSG;
 
+use Pleo\BSG\Ctrl\GameCreatePage;
+use Pleo\BSG\Ctrl\GameCreatePageSubmit;
+use Pleo\BSG\Ctrl\GameListPage;
 use Pleo\BSG\Ctrl\HomePageSubmit;
 use Pleo\BSG\Ctrl\RegisterPageSubmit;
 use Slim\Log;
@@ -18,12 +21,16 @@ $settings = [
 
 $slim = new Slim($settings);
 
-
-$slim->container->singleton('em',            function () {             return getEM();                       });
-$slim->container->singleton('redirector',    function () use ($slim) { return new Redirector($slim);         });
-$slim->container->singleton('session',       function () {             return new Session;                   });
-$slim->container->singleton('page-home',     function () use ($slim) { return new HomePageSubmit($slim);     });
-$slim->container->singleton('page-register', function () use ($slim) { return new RegisterPageSubmit($slim); });
+$slim->container->singleton('em',               function () {             return getEM();                         });
+$slim->container->singleton('redirector',       function () use ($slim) { return new Redirector($slim);           });
+$slim->container->singleton('session',          function () {             return new Session;                     });
+$slim->container->singleton('page-home',        function () use ($slim) { return new HomePageSubmit($slim);       });
+$slim->container->singleton('page-register',    function () use ($slim) { return new RegisterPageSubmit($slim);   });
+$slim->container->singleton('page-game-list',   function () use ($slim) { return new GameListPage($slim);         });
+$slim->container->singleton('page-game-create', function () use ($slim) { return new GameCreatePage($slim);       });
+$slim->container->singleton('page-game-submit', function () use ($slim) { return new GameCreatePageSubmit($slim); });
+$slim->container->singleton('login-context',    function () use ($slim) { return new LoginContext($slim);         });
+$slim->container->singleton('login-guard',      function () use ($slim) { return new LoginGuard($slim);           });
 
 
 $slim->get('/', function () use ($slim) {
@@ -56,17 +63,22 @@ $slim->post('/register', function () use ($slim) {
     $ctrl();
 });
 
-$slim->get('/dashboard', function () use ($slim) {
-    /** @var Session $session */
-    $session = $slim->container->get('session');
-    /** @var callable $redir */
-    $redir = $slim->container->get('redirector');
+$slim->get('/games', function () use ($slim) {
+    /** @var GameListPage $ctrl */
+    $ctrl = $slim->container->get('page-game-list');
+    $ctrl();
+});
 
-    if (!$session->get('login')) {
-        $redir(303, '/');
-        return;
-    }
-    $slim->render('dashboard.html');
+$slim->get('/games/create', function () use ($slim) {
+    /** @var GameCreatePage $ctrl */
+    $ctrl = $slim->container->get('page-game-create');
+    $ctrl();
+});
+
+$slim->post('/games/create', function () use ($slim) {
+    /** @var GameCreatePageSubmit $ctrl */
+    $ctrl = $slim->container->get('page-game-submit');
+    $ctrl();
 });
 
 $slim->run();

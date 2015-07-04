@@ -3,6 +3,7 @@ namespace Pleo\BSG\Ctrl;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Pleo\BSG\Entities\UserRepository;
+use Pleo\BSG\LoginContext;
 use Pleo\BSG\Redirector;
 use Pleo\BSG\Session;
 use Slim\Slim;
@@ -43,8 +44,8 @@ class HomePageSubmit
     {
         $user = $this->repo->authenticate($this->username, $this->password);
         if (false !== $user) {
-            $this->session->set('login', $user->id());
-            call_user_func($this->redir, 303, '/dashboard');
+            $this->session->set(LoginContext::LOGIN_VAR, $user->id());
+            call_user_func($this->redir, 303, '/games');
             return;
         }
 

@@ -39,4 +39,13 @@ class UserRepository extends EntityRepository
 
         return false;
     }
+
+    /**
+     * @param string $username
+     * @return User|null $username
+     */
+    public function getByUsername($username)
+    {
+        return $this->findOneBy(['username' => $username]);
+    }
 }

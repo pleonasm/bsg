@@ -1,0 +1,16 @@
+Pleo\BSG\Entities\Game:
+  type: entity
+  table: games
+  repositoryClass: Pleo\BSG\Entities\GameRepository
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: NONE
+  fields:
+    title:
+      type: string
+      length: 32
+  manyToOne:
+    owner:
+      targetEntity: User
