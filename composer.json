@@ -6,6 +6,12 @@
         "symfony/yaml": "~2.7",
         "doctrine/orm": "~2.4"
     },
+    "require-dev": {
+        "behat/behat": "~3.0",
+        "behat/mink": "~1.6",
+        "behat/mink-extension": "~2.0",
+        "behat/mink-goutte-driver": "~1.1"
+    },
     "license": "MIT",
     "authors": [
         {
