@@ -1,0 +1,24 @@
+services:
+  page.home:
+    class: "Pleo\\BSG\\Ctrl\\LoginPage"
+    arguments:
+      - "@slim.view"
+  submit.home:
+    class: "Pleo\\BSG\\Ctrl\\LoginSubmit"
+    arguments:
+      - "@slim.view"
+      - "@slim.request"
+      - "@bsg.repo.user"
+      - "@bsg.session"
+      - "@bsg.redirector"
+  page.register:
+    class: "Pleo\\BSG\\Ctrl\\RegistrationPage"
+    arguments:
+      - "@slim.view"
+
+  submit.register:
+    class: "Pleo\\BSG\\Ctrl\\RegistrationSubmit"
+    arguments:
+      - "@slim.request"
+      - "@bsg.repo.user"
+      - "@bsg.redirector"

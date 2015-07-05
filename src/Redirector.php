@@ -1,23 +1,37 @@
 <?php
 namespace Pleo\BSG;
 
+use Slim\Http\Request;
+use Slim\Http\Response;
 use Slim\Slim;
 
 class Redirector
 {
+    /**
+     * @var string
+     */
     private $scheme;
+
+    /**
+     * @var string
+     */
     private $host;
+
+    /**
+     * @var Response
+     */
     private $response;
 
     /**
-     * @param Slim $slim
+     * @param Request $request
+     * @param Response $response
      */
-    public function __construct(Slim $slim)
+    public function __construct(Request $request, Response $response)
     {
-        $this->scheme = $slim->request()->getScheme();
-        $this->host = $slim->request()->getHost();
-        $port = $slim->request()->getPort();
-        $this->response = $slim->response();
+        $this->scheme = $request->getScheme();
+        $this->host = $request->getHost();
+        $port = $request->getPort();
+        $this->response = $response;
 
         if ('http' === $this->scheme && 80 !== $port) {
             $this->host .= ':' . $port;
@@ -31,7 +45,7 @@ class Redirector
      * @param int $statusCode
      * @param string $urlPath
      */
-    public function __invoke($statusCode, $urlPath)
+    public function redirect($statusCode, $urlPath)
     {
         $urlPath = ltrim($urlPath, '/');
         $baseUrl = $this->scheme . '://' . $this->host . '/' . $urlPath;

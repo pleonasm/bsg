@@ -5,7 +5,7 @@ Feature: Security
     And I go to "/games"
     Then I should be on "/"
 
-  Scenario: Dashboard page protected by login
+  Scenario: Game create page protected by login
     Given I am on "/"
     And I go to "/games/create"
     Then I should be on "/"

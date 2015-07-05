@@ -1,0 +1,16 @@
+services:
+  bsg.redirector:
+    class: "Pleo\\BSG\\Redirector"
+    arguments:
+      - "@slim.request"
+      - "@slim.response"
+
+  bsg.repo.user:
+    class: "Pleo\\BSG\\Entities\\UserRepository"
+    factory_service: "orm.em"
+    factory_method: "getRepository"
+    arguments:
+      - "Pleo\\BSG\\Entities\\User"
+
+  bsg.session:
+    class: "Pleo\\BSG\\Session"

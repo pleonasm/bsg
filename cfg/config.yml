@@ -1,0 +1,12 @@
+slim:
+  mode: development
+  debug: true
+  log.level: 8
+  log.enabled: true
+  templates.path: "%root%/tpl/"
+doctrine.isDevMode: true
+doctrine.mappingPath: "orm/"
+doctrine.db:
+  driver: pdo_sqlite
+  path: dat/data.sqlite
+routes: "cfg/routes.yml"

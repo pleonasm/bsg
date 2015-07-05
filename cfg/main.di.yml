@@ -1,0 +1,71 @@
+services:
+  dic:
+    class: "Symfony\\Component\\DependencyInjection\\ContainerBuilder"
+    synthetic: true
+    public: false
+
+  app:
+    class: "Pleo\\BSG\\Application"
+    arguments:
+      - "@dic"
+    public: false
+
+  slim:
+    class: "Slim\\Slim"
+    arguments:
+      - "%slim%"
+    public: false
+
+  orm.driver:
+    class: "Doctrine\\ORM\\Mapping\\Driver\\YamlDriver"
+    arguments:
+      - "%root%/%doctrine.mappingPath%"
+      - ".yaml"
+    public: false
+
+  orm.config:
+    class: "Doctrine\\ORM\\Configuration"
+    factory_class: "Doctrine\\ORM\\Tools\\Setup"
+    factory_method: "createConfiguration"
+    arguments:
+      - "%doctrine.isDevMode%"
+    calls:
+      - ["setMetadataDriverImpl", ["@orm.driver"]]
+    public: false
+
+  router:
+    class: "Pleo\\BSG\\RouteLoader"
+    arguments:
+      - "@slim"
+      - "@dic"
+      - "%root%/%routes%"
+    public: false
+
+  ### Publicly Available Objects ###
+
+  # Request Object
+  slim.request:
+    class: "Slim\\Http\\Request"
+    factory_service: "slim"
+    factory_method: "request"
+
+  # Response Object
+  slim.response:
+    class: "Slim\\Http\\Response"
+    factory_service: "slim"
+    factory_method: "response"
+
+  # Doctrine Entity Manager
+  orm.em:
+    class: "Doctrine\\ORM\\EntityManager"
+    factory_class: "Doctrine\\ORM\\EntityManager"
+    factory_method: "create"
+    arguments:
+      - "%doctrine.db%"
+      - "@orm.config"
+
+  # Slim View Object
+  slim.view:
+    class: "Slim\\View"
+    factory_service: "slim"
+    factory_method: "view"
