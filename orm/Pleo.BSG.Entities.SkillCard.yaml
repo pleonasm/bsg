@@ -18,5 +18,5 @@ Pleo\BSG\Entities\SkillCard:
       length: 32
     color:
       type: smallint
-    gamebox:
+    gameBox:
       type: smallint

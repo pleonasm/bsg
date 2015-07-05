@@ -3,6 +3,7 @@ namespace Pleo\BSG\Entities;
 
 class SkillCard
 {
+    private $id;
     private $title;
     private $strength;
     private $img;
@@ -21,6 +22,14 @@ class SkillCard
         $this->img = $img;
         $this->color = $color;
         $this->gameBox = $gameBox;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function id()
+    {
+        return $this->id;
     }
 
     /**
