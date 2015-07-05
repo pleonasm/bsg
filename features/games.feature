@@ -12,3 +12,8 @@ Feature: Creation & Management of Games
     Given I fill in "Name" with "My New Game"
     And I press "New Game"
     Then I should be on "/games"
+
+  Scenario: Display all games in the database
+    Given I am on "/games"
+    Then I should see "My New Game"
+    And I should see "mnagi"
