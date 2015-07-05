@@ -1,0 +1,22 @@
+Pleo\BSG\Entities\SkillCard:
+  type: entity
+  table: skillCards
+  repositoryClass: Pleo\BSG\Entities\SkillCardRepository
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: NONE
+  fields:
+    title:
+      type: string
+      length: 32
+    strength:
+      type: smallint
+    img:
+      type: string
+      length: 32
+    color:
+      type: smallint
+    gamebox:
+      type: smallint

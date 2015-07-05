@@ -1,0 +1,26 @@
+Pleo\BSG\Entities\CrisisCard:
+  type: entity
+  table: crisisCards
+  repositoryClass: Pleo\BSG\Entities\CrisisCardRepository
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: NONE
+  fields:
+    title:
+      type: string
+      length: 32
+    strength:
+      type: smallint
+    img:
+      type: string
+      length: 32
+    colors:
+      type: smallint
+    gamebox:
+      type: smallint
+    passingColors:
+      type: smallint
+    isSuper:
+      type: boolean
