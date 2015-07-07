@@ -8,7 +8,13 @@ class UserRepository extends EntityRepository
     public function newUserUnsafe($displayName, $username, $password, $phone, $flush = true)
     {
         $id = mt_rand(1, mt_getrandmax());
-        $user = new User($id, $displayName, $username, $password, $phone);
+        $hashedPasswd = password_hash($password, PASSWORD_DEFAULT);
+
+        if (!$hashedPasswd) {
+            throw new \UnexpectedValueException('we dont like this password for some reason');
+        }
+
+        $user = new User($id, $displayName, $username, $hashedPasswd, $phone);
         $this->_em->persist($user);
         if ($flush) {
             $this->_em->flush();
@@ -33,7 +39,7 @@ class UserRepository extends EntityRepository
 
         /** @var User $result */
         $result = $result[0];
-        if ($password === $result->password()) {
+        if (password_verify($password, $result->password())) {
             return $result;
         }
 
