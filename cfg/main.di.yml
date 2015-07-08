@@ -41,6 +41,12 @@ services:
       - "%root%/%routes%"
     public: false
 
+  slim.routehelpers:
+    class: "Pleo\\BSG\\SlimStop"
+    arguments:
+      - "@slim"
+    public: false
+
   ### Publicly Available Objects ###
 
   # Request Object
@@ -69,3 +75,8 @@ services:
     class: "Slim\\View"
     factory_service: "slim"
     factory_method: "view"
+
+  slim.stop:
+    class: "Closure"
+    factory_service: "@slim.routehelpers"
+    factory_method: "stoppingFunction"

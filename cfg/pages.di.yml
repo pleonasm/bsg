@@ -1,4 +1,11 @@
 services:
+
+  mw.guard.login:
+    class: "Pleo\\BSG\\LoginGuard"
+    arguments:
+      - "@bsg.logincontext"
+      - "@bsg.redirector"
+
   page.home:
     class: "Pleo\\BSG\\Ctrl\\LoginPage"
     arguments:
@@ -11,14 +18,37 @@ services:
       - "@bsg.repo.user"
       - "@bsg.session"
       - "@bsg.redirector"
+
   page.register:
     class: "Pleo\\BSG\\Ctrl\\RegistrationPage"
     arguments:
       - "@slim.view"
-
   submit.register:
     class: "Pleo\\BSG\\Ctrl\\RegistrationSubmit"
     arguments:
       - "@slim.request"
       - "@bsg.repo.user"
       - "@bsg.redirector"
+
+  page.logout:
+    class: "Pleo\\BSG\\Ctrl\\LogoutPage"
+    arguments:
+      - "@bsg.session"
+      - "@bsg.redirector"
+
+  page.games:
+    class: "Pleo\\BSG\\Ctrl\\GamesPage"
+    arguments:
+      - "@bsg.repo.game"
+      - "@slim.view"
+  page.games.create:
+    class: "Pleo\\BSG\\Ctrl\\GamesCreatePage"
+    arguments:
+      - "@slim.view"
+  submit.games.create:
+    class: "Pleo\\BSG\\Ctrl\\GamesCreatePageSubmit"
+    arguments:
+      - "@bsg.repo.game"
+      - "@bsg.redirector"
+      - "@bsg.currentuser"
+      - "@slim.request"

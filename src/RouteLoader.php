@@ -70,7 +70,7 @@ class RouteLoader
 
         foreach ($middlewareKeys as &$key) {
             $serviceName = $key;
-            $key = function (Route $route) use ($dic, $serviceName) {
+            $key = function () use ($dic, $serviceName) {
                 /** @var callable $middleware */
                 $middleware = $dic->get($serviceName);
                 call_user_func($middleware);
@@ -78,6 +78,7 @@ class RouteLoader
         }
 
         $pageBootstrap = function () use ($pageHandler, $dic) {
+            /** @var callable $pageHandler */
             $pageHandler = $dic->get($pageHandler);
             call_user_func($pageHandler);
         };

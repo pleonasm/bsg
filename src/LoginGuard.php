@@ -1,32 +1,25 @@
 <?php
 namespace Pleo\BSG;
 
-use Slim\Slim;
-
 class LoginGuard
 {
     /**
      * @var LoginContext
      */
     private $loginContext;
-
     /**
      * @var Redirector
      */
-    private $redir;
+    private $redirector;
 
     /**
-     * @param Slim $slim
+     * @param LoginContext $loginContext
+     * @param Redirector $redirector
      */
-    public function __construct(Slim $slim)
+    public function __construct(LoginContext $loginContext, Redirector $redirector)
     {
-        /** @var LoginContext $loginContext */
-        $loginContext = $slim->container->get('login-context');
-        /** @var Redirector $redir */
-        $redir = $slim->container->get('redirector');
-
         $this->loginContext = $loginContext;
-        $this->redir = $redir;
+        $this->redirector = $redirector;
     }
 
     /**
@@ -34,9 +27,10 @@ class LoginGuard
      */
     public function __invoke()
     {
-        $loggedIn = call_user_func($this->loginContext);
+        $loggedIn = $this->loginContext->currentUser();
+
         if (!$loggedIn) {
-            call_user_func($this->redir, 303, '/');
+            $this->redirector->redirect(303, '/');
             return false;
         }
         return true;

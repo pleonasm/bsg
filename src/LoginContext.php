@@ -1,10 +1,8 @@
 <?php
 namespace Pleo\BSG;
 
-use Doctrine\ORM\EntityManagerInterface;
 use Pleo\BSG\Entities\User;
 use Pleo\BSG\Entities\UserRepository;
-use Slim\Slim;
 
 class LoginContext
 {
@@ -14,6 +12,7 @@ class LoginContext
      * @var Session
      */
     private $session;
+
     /**
      * @var UserRepository
      */
@@ -25,17 +24,11 @@ class LoginContext
     private $user;
 
     /**
-     * @param Slim $slim
+     * @param Session $session
+     * @param UserRepository $userRepository
      */
-    public function __construct(Slim $slim)
+    public function __construct(Session $session, UserRepository $userRepository)
     {
-        /** @var EntityManagerInterface $em */
-        $em = $slim->container->get('em');
-        /** @var  $userRepository */
-        $userRepository = $em->getRepository('Pleo\\BSG\\Entities\\User');
-        /** @var Session $session */
-        $session = $slim->container->get('session');
-
         $this->session = $session;
         $this->userRepository = $userRepository;
     }
@@ -44,7 +37,7 @@ class LoginContext
      * Returns the user who is logged in, or null if no user is logged in
      * @return User|null
      */
-    public function __invoke()
+    public function currentUser()
     {
         if (is_null($this->user)) {
             $userId = $this->session->get(static::LOGIN_VAR, null);

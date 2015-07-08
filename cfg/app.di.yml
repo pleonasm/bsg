@@ -12,5 +12,23 @@ services:
     arguments:
       - "Pleo\\BSG\\Entities\\User"
 
+  bsg.repo.game:
+    class: "Pleo\\BSG\\Entities\\GameRepository"
+    factory_service: "orm.em"
+    factory_method: "getRepository"
+    arguments:
+      - "Pleo\\BSG\\Entities\\Game"
+
   bsg.session:
     class: "Pleo\\BSG\\Session"
+
+  bsg.logincontext:
+    class: "Pleo\\BSG\\LoginContext"
+    arguments:
+      - "@bsg.session"
+      - "@bsg.repo.user"
+
+  bsg.currentuser:
+    class: "Pleo\\BSG\\Entities\\User"
+    factory_service: "bsg.logincontext"
+    factory_method: "currentUser"
