@@ -11,6 +11,11 @@ Pleo\BSG\Entities\Game:
     title:
       type: string
       length: 32
+    expansions:
+      type: integer
+
   manyToOne:
     owner:
       targetEntity: User
+  # manyToMany:
+  #   players:

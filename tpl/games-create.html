@@ -2,8 +2,16 @@
 <?php require 'nav.html'; ?>
     <form action="/games/create" method="post">
       <fieldset>
-        <legend>Create New Game</legend>
-        <label for="gamename">Name</label> <input id="gamename" name="gamename" type="text">
+        <legend>New Game</legend>
+        <label for="gamename">Game Title</label> <input id="gamename" name="gamename" type="text">
+        <label for="gameispegasus">Pegasus</label> <input id="gameispegasus" name="gameispegasus" type="checkbox">
+        <label for="gameisexodus">Exodus</label> <input id="gameisexodus" name="gameisexodus" type="checkbox">
+        <label for="gameisdaybreak">Daybreak</label> <input id="gameisdaybreak" name="gameisdaybreak" type="checkbox">
+        <label for="player1">Player 1</label> <input id="player1" name="player1" type="text">
+        <label for="player2">Player 2</label> <input id="player2" name="player2" type="text">
+        <label for="player3">Player 3</label> <input id="player3" name="player3" type="text">
+        <label for="player4">Player 4</label> <input id="player4" name="player4" type="text">
+        <label for="player5">Player 5</label> <input id="player5" name="player5" type="text">
         <button type="submit">New Game</button>
       </fieldset>
     </form>

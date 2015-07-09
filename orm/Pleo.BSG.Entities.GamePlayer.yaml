@@ -1,0 +1,17 @@
+Pleo\BSG\Entities\GamePlayer:
+  type: entity
+  table: gameplayers
+  repositoryClass: Pleo\BSG\Entities\GamePlayerRepository
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: NONE
+  fields:
+    createDate:
+      type: datetime
+  manyToOne:
+    game:
+      targetEntity: Game
+    user:
+      targetEntity: User
