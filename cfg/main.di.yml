@@ -47,6 +47,13 @@ services:
       - "@slim"
     public: false
 
+  form.factory:
+    class: "Symfony\\Component\\Form\\FormFactoryInterface"
+    factory_class: "Symfony\\Component\\Form\\Forms"
+    factory_method: "createFormFactory"
+    public: false
+
+
   ### Publicly Available Objects ###
 
   # Request Object
@@ -76,7 +83,15 @@ services:
     factory_service: "slim"
     factory_method: "view"
 
+  # Slim stopper function (ie when you run it, slims execution is stopped)
   slim.stop:
     class: "Closure"
-    factory_service: "@slim.routehelpers"
+    factory_service: "slim.routehelpers"
     factory_method: "stoppingFunction"
+
+  # Form Builder
+  form.builder:
+    class: "Symfony\\Component\\Form\\FormBuilderInterface"
+    factory_service: "form.factory"
+    factory_method: "createBuilder"
+    scope: "prototype"

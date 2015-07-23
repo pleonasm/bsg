@@ -47,8 +47,13 @@ class LoginSubmit
      * @param Session $session
      * @param Redirector $redir
      */
-    public function __construct(View $view, Request $request, UserRepository $userRepository, Session $session, Redirector $redir)
-    {
+    public function __construct(
+        View $view,
+        Request $request,
+        UserRepository $userRepository,
+        Session $session,
+        Redirector $redir
+    ) {
         $this->view = $view;
         $this->username = $request->post('username');
         $this->password = $request->post('password');

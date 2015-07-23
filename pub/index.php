@@ -1,13 +1,6 @@
 <?php
 namespace Pleo\BSG;
 
-use Exception;
-use Pleo\BSG\Ctrl\GameCreatePage;
-use Pleo\BSG\Ctrl\GameCreatePageSubmit;
-use Pleo\BSG\Ctrl\GameListPage;
-use Pleo\BSG\Ctrl\HomePageSubmit;
-use Pleo\BSG\Ctrl\RegisterPageSubmit;
-use Slim\Log;
 use Slim\Slim;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;

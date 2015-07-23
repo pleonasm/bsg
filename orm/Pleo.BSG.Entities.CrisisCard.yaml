@@ -24,3 +24,5 @@ Pleo\BSG\Entities\CrisisCard:
       type: smallint
     isSuper:
       type: boolean
+    isNewCaprica:
+      type: boolean

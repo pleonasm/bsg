@@ -45,6 +45,7 @@ services:
     class: "Pleo\\BSG\\Ctrl\\GamesCreatePage"
     arguments:
       - "@slim.view"
+      - "@form.builder"
   submit.games.create:
     class: "Pleo\\BSG\\Ctrl\\GamesCreatePageSubmit"
     arguments:

@@ -33,7 +33,7 @@ class UserRepository extends EntityRepository
         assert(!(count($result) > 1), "We should never have more than 1 record for a given username");
 
         if (count($result) === 0) {
-            // TODO: insert fake hash here to stop ability to fish for valid usernames via timing
+            password_verify($password, 'password');
             return false;
         }
 

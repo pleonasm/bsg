@@ -45,13 +45,19 @@ class CrisisCard
      */
     private $isSuper;
 
+    /**
+     * @var boolean
+     */
+    private $isNewCaprica;
+
     public function __construct(
         $title,
         $strength,
         $img,
         $gameBox,
         array $passingColors,
-        $isSuper
+        $isSuper,
+        $isNewCaprica
     ) {
         $this->title = $title;
         $this->strength = $strength;
@@ -59,6 +65,7 @@ class CrisisCard
         $this->gameBox = $gameBox;
         $this->setColors($passingColors);
         $this->isSuper = $isSuper;
+        $this->isNewCaprica = $isNewCaprica;
     }
 
     /**

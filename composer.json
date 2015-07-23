@@ -7,7 +7,12 @@
         "symfony/dependency-injection": "~2.7",
         "symfony/yaml": "~2.7",
         "symfony/proxy-manager-bridge": "~2.7",
-        "symfony/config": "~2.7"
+        "symfony/config": "~2.7",
+        "ircmaxell/random-lib": "~1.1",
+        "symfony/form": "~2.7",
+        "twig/twig": "~1.18",
+        "symfony/validator": "~2.7",
+        "symfony/twig-bridge": "~2.7"
     },
     "require-dev": {
         "behat/behat": "~3.0",

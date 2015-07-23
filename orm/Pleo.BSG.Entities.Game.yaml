@@ -17,5 +17,3 @@ Pleo\BSG\Entities\Game:
   manyToOne:
     owner:
       targetEntity: User
-  # manyToMany:
-  #   players:
